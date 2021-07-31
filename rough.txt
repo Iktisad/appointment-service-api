@@ -1,0 +1,64 @@
+// appointments can be created or updated by the client user.patient themselves
+appointments:
+    {
+        resourceId: "string",               // doctor id.
+        resourceName: "string",             // doctor name
+        Specialist: "string",               // Med / Card / Neuro,
+        userId: "string",                   // patient Id
+        userName: "string",                 // patient name
+        startDate: "2020-05-18T16:00:00Z",  // appointment start date
+        endDate: "2020-05-18T17:00:00Z",    // appointment end date
+        status: "string",                   /* appointment status {cancelled, approved, waiting} 
+                                               cancelled -- client/patient cancels an appointment
+                                               approved -- when doctor approves the appointment in the given slot or default auto approved
+                                               waiting -- when default auto approve is turned off,
+                                                          patient needs to wait for appointment confirmation
+                                            */
+        userContact:"string",
+        location: "string",
+        description: "string",              // small description of the problem or message to the doctor
+        type: {
+            isOnline:"true/false",          // type can be Home Consultation(telemedicine/online),In-Person
+            inPerson:"true/false",
+            isFollowUp:"true/false"         // new or follow up
+        },
+        Fee:{                                                      
+            paid: "Integer",                // payment must be done for an appointment to avoid any spamming,
+            isWaivered: "true/false"        // doctor has the option to waiver fee.
+        }
+    }
+
+// resources part can be created or updated by the client user.doctors themselves
+resources:
+    {
+        resourceId: "string",               //doctor Id
+        resourceName: "string",             // doctor name
+        specialist: "string",               // Med / Card / Neuro
+        title:"string",                     // profession title eg. surgeon, professor
+        bio:"string"
+        contact: "+880 123 456 78",
+        rating: "integer",                  // trust vote of the doctor
+        autoApprove: "true/false",          // doctor can auto approve appointments or disable this option to manually approve
+        Fee:"integer",                      // consultation fee of the doctor
+        isVerified:"true/false",
+        affiliations: [                     // list of places the doctor works in and their respective available timeslots
+            {
+                oganisationId:123
+                organisationName: "h&h",    // hospital or clinic name
+                location:"string"           // coordinates of the location to find by nearest location filter
+                timeslot:{
+                    Monday: ["9:30am-12pm", "4pm-6pm", "7pm-9pm"],
+                    Wednesday: ["9:30am-12pm", "4pm-6pm", "7pm-9pm"]
+                },               
+            },
+            {
+                organisationId:123
+                organisationName: "BRB",
+                location: "string",
+                timeslot:{
+                    Monday: ["9:30am-12pm", "4pm-6pm", "7pm-9pm"],
+                    Wednesday: ["9:30am-12pm", "4pm-6pm", "7pm-9pm"]
+                },
+            },
+        ]
+    }

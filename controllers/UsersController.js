@@ -50,7 +50,6 @@ export const update = async (req, res, next)=> {
     } catch (error) {
         res.json({message:error});
     }
-   
  };
 // req, res to delete a user
 export const remove = async (req, res, next)=> { 
