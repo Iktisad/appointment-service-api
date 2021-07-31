@@ -1,1 +1,1 @@
-# appointment_fixer
+# appointment-service-api
