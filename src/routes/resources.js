@@ -1,14 +1,14 @@
 import express from 'express';
-import {getAll, getUser, create, update, remove} from '../controllers/UsersController.js';
+import {getAll, getResourceById, create, update, remove} from '../controllers/ResourcesController.js';
 const router = express.Router();
 
 // all routes start here with /users
 
 // GET: /users
-router.get('/', getAll);
+router.get('/', getAll)  ;
 
 // GET: /users/id
-router.get('/:id', getUser);
+router.get('/:id', getResourceById);
 
 // POST: /users/create
 router.post('/create', create);

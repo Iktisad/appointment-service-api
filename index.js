@@ -1,5 +1,7 @@
 import express from 'express';
 import usersRoutes from './routes/users.js';
+import resourceRoutes from './routes/resources.js';
+// import appointmentRoutes from './routes/appointments.js';
 import mongoose from 'mongoose';
 import {} from 'dotenv/config';
 
@@ -10,6 +12,8 @@ app.use(express.json());
 
 // route middleware
 app.use('/users', usersRoutes);
+app.use('/api/resources', resourceRoutes);
+// app.use('/appointments', appointmentRoutes);
 // routes
 
 app.get('/', (req, res)=>{

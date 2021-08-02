@@ -1,0 +1,48 @@
+// appointments can be created or updated by the client user.patient themselves
+appointments:
+    {
+        duuid: "string",                    // doctor id.
+        doctorName: "string",               // doctor name
+        Specialist: "string",               // Med / Card / Neuro,
+        puuid: "string",                    // patient Id
+        patientName: "string",              // patient name
+        startDate: "2020-05-18T16:00:00Z",  // appointment start date
+        endDate: "2020-05-18T17:00:00Z",    // appointment end date
+        status: "string",                   /* appointment status {cancelled, approved, waiting} 
+                                               cancelled -- client/patient cancels an appointment
+                                               approved -- when doctor approves the appointment in the given slot or default auto approved
+                                               waiting -- when default auto approve is turned off,
+                                                          patient needs to wait for appointment confirmation
+                                            */
+        patientContact:"string",
+        location: "string",
+        description: "string",              // small description of the problem or message to the doctor
+        type: "string",                     // {inPerson , Online , Follow Up}
+        
+        Fee: "Number",                      // payment must be done for an appointment to avoid any spamming,
+        isWaivered: "true/false"            // doctor has the option to waiver fee.
+        
+    }
+
+// resources part can be created or updated by the client user.doctors themselves
+resource:
+    {
+        duuid: "string",               // doctor Id
+        doctoName: "string",             // doctor name
+        
+        appointmentTime: [                     // list of places the doctor works in and their respective available timeslots
+            {
+                oganisationId:123
+                organisationName: "h&h",    // hospital or clinic name
+                location:"string"           // coordinates of the location to find by nearest location filter
+                schedule:[
+                    {
+                        day: sunday
+                        startTime: "7am", // 24 hrs clock
+                        endTime:  "12pm",  // 24 hrs clock
+                        duration: "30" // in mins
+                    }
+                ],               
+            }
+        ]
+    }
