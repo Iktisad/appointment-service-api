@@ -5,7 +5,7 @@ const router = express.Router();
 // all routes start here with /users
 
 // GET: /users
-router.get('/', getAll)  ;
+router.get('/', getAll);
 
 // GET: /users/id
 router.get('/:id', getResourceById);

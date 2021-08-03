@@ -1,5 +1,5 @@
 import express from 'express';
-import resourceRoutes from './routes/resources.js';
+import {resourceRoute, patientAppointmentsRoute} from './routes/router-index.js';
 // import appointmentRoutes from './routes/appointments.js';
 import mongoose from 'mongoose';
 import {} from 'dotenv/config';
@@ -10,17 +10,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // route middleware
-app.use('/api/resources', resourceRoutes);
-// app.use('/appointments', appointmentRoutes);
+app.use('/api/resources', resourceRoute);
+app.use('/api/appointments', patientAppointmentsRoute);
 // routes
 
+// testing route
 app.get('/', (req, res)=>{
     res.send('Yo I m active');
     console.log('Yay');
 });
 
-    
-
+// setting up connection to database
 mongoose.connect(process.env.CONNECTION_STRING.replace('<DBPORT>', process.env.DBPORT).replace('<DBNAME>',process.env.DBNAME),
 {
     useNewUrlParser:true, 

@@ -58,7 +58,7 @@ const appointmentSchema = mongoose.Schema({
     doctorName: reqString,         // doctor name
     specialist: reqString,         // Med / Card / Neuro,
     puuid: puuidString,                    // patient Id
-    userName: reqString,                 // patient name,
+    patientName: reqString,                 // patient name,
     startDate: reqDate,                  // appointment start date
     endDate: Date,                       // appointment end date
         
@@ -85,6 +85,8 @@ const appointmentSchema = mongoose.Schema({
     fee: reqNumber,                      // payment must be done for an appointment to avoid any spamming,
     isWaivered: Boolean,                // doctor has the option to waiver fee.
     
+},{
+    timestamps:true
 });
 
 export const AppointmentModel = mongoose.model('appointments', appointmentSchema)
