@@ -25,7 +25,8 @@ mongoose.connect(process.env.CONNECTION_STRING.replace('<DBPORT>', process.env.D
 {
     useNewUrlParser:true, 
     useUnifiedTopology:true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useCreateIndex: true
 },
 
 () => {

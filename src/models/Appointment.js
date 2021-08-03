@@ -22,6 +22,13 @@ const reqString = {
     minlength:3,
     maxlength:255
 };
+const reqStatusString = {
+    type: String,
+    required:true,
+    default:'wa',
+    minlength:2,
+    maxlength:2
+};
 
 const reqDate = {
     type:Date,
@@ -33,11 +40,7 @@ const reqNumber = {
     required:true,
     min:1
 };
-const resourceFkId = {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Resource',
-    required:true
-};
+
 // ===============================================================================================================================
 
 const geoSchema = mongoose.Schema({
@@ -65,9 +68,9 @@ const appointmentSchema = mongoose.Schema({
 
     /* 
         appointment status {cancelled, approved, waiting} 
-        cancelled -- client/patient cancels an appointment
-        approved -- when doctor approves the appointment in the given slot or default auto approved
-        waiting -- when default auto approve is turned off,
+        cancelled (ca) -- client/patient cancels an appointment
+        approved  (ap) -- when doctor approves the appointment in the given slot or default auto approved
+        waiting   (wa) -- when default auto approve is turned off,
         patient needs to wait for appointment confirmation
     */
     status: reqString,                                 

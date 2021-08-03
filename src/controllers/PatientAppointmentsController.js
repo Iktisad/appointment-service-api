@@ -8,7 +8,7 @@ export const create = async (req, res, next)=>{
     try {
         
         const appointment = await AppointmentModel.create(req.body);
-        
+        // console.log("Reached Create");
         res.status(201).json({
             message:'Appointment Created',
             results: appointment
