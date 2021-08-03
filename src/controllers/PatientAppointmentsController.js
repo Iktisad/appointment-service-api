@@ -6,9 +6,9 @@ import { AppointmentModel } from '../models/Appointment.js'
 export const create = async (req, res, next)=>{
 
     try {
-        
+       
         const appointment = await AppointmentModel.create(req.body);
-        // console.log("Reached Create");
+        
         res.status(201).json({
             message:'Appointment Created',
             results: appointment
@@ -28,8 +28,27 @@ export const create = async (req, res, next)=>{
 export const listAppointments = async(req, res, next)=> {
     
     try {
-
-        const list = await AppointmentModel.find({})
+         /**
+         * filter by date (recent to oldest)
+         * filter by doctor name or specialist tag
+         */
+        let query;
+        // console.log(Object.keys(req.query));
+        if(Object.keys(req.query).length > 0){
+            // check query params
+            query = {
+                puuid:req.params.id,
+                $or:[
+                    {specialist:{ $regex: req.query.search, $options: 'i' }},
+                    {doctorName:{ $regex: req.query.search, $options: 'i' }}
+                    
+                ]
+           };
+            
+        }else{
+            query = {puuid:req.params.id};
+        }
+        const list = await AppointmentModel.find(query).sort({createdAt: 'desc'});
         
         res.status(200).json({
             message: "showing all list here",
@@ -41,9 +60,7 @@ export const listAppointments = async(req, res, next)=> {
             message: "Something went wrong",
             result: error
         });
-    }
-
-   
+    } 
 
 };
 
@@ -57,21 +74,12 @@ export const cancel = async(req,res,next) => {
 /**
  * request change is an appointment request to doctor to reschedule the time
  */
-const requestChange = (req, res, next) => {
+// const requestChange = (req, res, next) => {
 
-}
+// }
 /**
- * filter by date (recent to stale)
  * filter results by date range
- * filter by doctor name or specialist tag
  */
 // const searchByDate = async (req, res, next) => {
 
 // }
- 
-// const searchByName = async (req, res, next) => {
-
-// }
-    // async cancel(req, res, next){
-
-    // }

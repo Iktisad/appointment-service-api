@@ -1,6 +1,8 @@
 // ...rest of the initial code omitted for simplicity.
 import pkg from 'express-validator';
-const { check, validationResult} = pkg;
+const { check, validationResult } = pkg;
+
+
 export const paValidationSchema= [
 
     check('duuid').notEmpty(),
@@ -17,7 +19,7 @@ export const paValidationSchema= [
 
 ];
    
-export const appointmentValidation = (req, res, next) => {   
+export const validate = (req, res, next) => {   
     
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
