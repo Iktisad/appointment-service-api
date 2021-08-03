@@ -44,7 +44,7 @@ const resourceSchema = mongoose.Schema({
                 schedule:[
                     {
                         _id: false,
-                        days:[reqDayString],
+                        days:reqDayString,
                         startTime:reqString,
                         endTime: reqString,
                     },
