@@ -2,6 +2,11 @@
 import pkg from 'express-validator';
 const { check, validationResult,body } = pkg;
 
+// appointment status check
+export const appointmetnStatusCheck = [
+    check('status','status flag is not valid').notEmpty().isAlpha().isLength({min:2, max:3})
+];
+
 // start and end date validator
 export const dateCheck = [
 

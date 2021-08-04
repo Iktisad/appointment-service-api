@@ -145,3 +145,26 @@ export const filterAppointmnetByDate = async (req, res, next) => {
     } 
    
 }
+
+// filter appointment by status
+export const filterAppointmentByStatus = async(req,res,next)=> {
+    try {
+        const list = await AppointmentModel.find({
+            puuid: req.params.id,
+            status: req.body.status
+        });
+
+        res.status(200).json({
+            message:'Displaying results',
+            result: list
+        });
+        next();
+
+    } catch (error) {
+        res.status(400).json({
+            message:'Something went wrong',
+            error: error
+        });
+        next();
+    }
+}
