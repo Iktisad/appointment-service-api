@@ -73,7 +73,7 @@ const appointmentSchema = mongoose.Schema({
         waiting   (wa) -- when default auto approve is turned off,
         patient needs to wait for appointment confirmation
     */
-    status: reqString,                                 
+    status: reqStatusString,                                 
     userContact: reqString,
     address: {
 

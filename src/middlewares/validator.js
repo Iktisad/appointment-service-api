@@ -1,6 +1,14 @@
 // ...rest of the initial code omitted for simplicity.
 import pkg from 'express-validator';
-const { check, validationResult } = pkg;
+const { check, validationResult,body } = pkg;
+
+// start and end date validator
+export const dateCheck = [
+
+    body('startDate','Date is required').notEmpty().isDate().withMessage('Enter a valid date'),
+
+    body('endDate','Date is required').notEmpty().isDate().withMessage('Enter a valid date'),
+];
 
 
 export const paValidationSchema= [
@@ -23,7 +31,7 @@ export const validate = (req, res, next) => {
     
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
-    console.log(errors.array());
+    
     if (!errors.isEmpty()) {
         console.log(errors.array());
         return res.status(400).json({ errors: errors.array() });
