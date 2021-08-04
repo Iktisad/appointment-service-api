@@ -1,12 +1,9 @@
-
 import { AppointmentModel } from '../models/Appointment.js'
-
 
 // creates a patient appointment in the system
 export const create = async (req, res, next)=>{
 
-    try {
-       
+    try {       
         const appointment = await AppointmentModel.create(req.body);
         
         res.status(201).json({
@@ -24,6 +21,7 @@ export const create = async (req, res, next)=>{
         next(error);
     }
 }
+
 // lists all the patient appointments 
 export const listAppointments = async(req, res, next)=> {
     
@@ -62,7 +60,10 @@ export const listAppointments = async(req, res, next)=> {
         });
     } 
 
+    // export const appointmentstatus 
+
 };
+
 
 // cancel is an appointment update request 
 // which only changes the status of the appointment
@@ -83,3 +84,4 @@ export const cancel = async(req,res,next) => {
 // const searchByDate = async (req, res, next) => {
 
 // }
+

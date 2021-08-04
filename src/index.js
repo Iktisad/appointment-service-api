@@ -16,7 +16,7 @@ app.use('/api/appointments', patientAppointmentsRoute);
 
 // testing route
 app.get('/', (req, res)=>{
-    res.send('Yo I m active');
+    res.send('Iktisad is a b****');
     console.log('Yay');
 });
 

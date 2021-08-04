@@ -55,15 +55,16 @@ const geoSchema = mongoose.Schema({
 });
 
 // ===============================================================================================================================
+
 const appointmentSchema = mongoose.Schema({
     
     duuid: duuidString,            // doctor id.
     doctorName: reqString,         // doctor name
     specialist: reqString,         // Med / Card / Neuro,
-    puuid: puuidString,                    // patient Id
-    patientName: reqString,                 // patient name,
-    startDate: reqDate,                  // appointment start date
-    endDate: Date,                       // appointment end date
+    puuid: puuidString,            // patient Id
+    patientName: reqString,        // patient name,
+    startDate: reqDate,            // appointment start date
+    endDate: Date,                 // appointment end date
         
 
     /* 
@@ -73,10 +74,10 @@ const appointmentSchema = mongoose.Schema({
         waiting   (wa) -- when default auto approve is turned off,
         patient needs to wait for appointment confirmation
     */
+
     status: reqString,                                 
     userContact: reqString,
     address: {
-
         country: reqString,
         city: reqString,
         area: reqString,
@@ -85,7 +86,7 @@ const appointmentSchema = mongoose.Schema({
     },
     description: String,                // small description of the problem or message to the doctor
     appointmentType: reqString,         // type can be Home Consultation(telemedicine/online),In-Person,
-    fee: reqNumber,                      // payment must be done for an appointment to avoid any spamming,
+    fee: reqNumber,                     // payment must be done for an appointment to avoid any spamming,
     isWaivered: Boolean,                // doctor has the option to waiver fee.
     
 },{
