@@ -116,6 +116,7 @@ export const filterAppointmnetByDate = async (req, res, next) => {
         const {startDate, endDate} = req.body
         const puuid = req.params.id;
         if (Date.parse(endDate) <= Date.parse(startDate)) {
+            res.status(400);
             throw new Error('BAD REQUEST: 400!! END date cannot be before START date');
         }
         
@@ -135,8 +136,8 @@ export const filterAppointmnetByDate = async (req, res, next) => {
         next();
 
     } catch (error) {
-
-        res.status(400).json({
+        if(res.statusCode == '200') res.status(400);
+        res.json({
             message:'Something went wrong',
             error: error.toString()
         });
