@@ -38,8 +38,7 @@ export const listAppointments = async(req, res, next)=> {
                 puuid:req.params.id,
                 $or:[
                     {specialist:{ $regex: req.query.search, $options: 'i' }},
-                    {doctorName:{ $regex: req.query.search, $options: 'i' }}
-                    
+                    {doctorName:{ $regex: req.query.search, $options: 'i' }}                    
                 ]
            };
             
