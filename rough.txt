@@ -3,7 +3,7 @@ appointments:
     {
         duuid: "string",                    // doctor id.
         doctorName: "string",               // doctor name
-        Specialist: "string",               // Med / Card / Neuro,
+        specialist: "string",               // Med / Card / Neuro,
         puuid: "string",                    // patient Id
         patientName: "string",              // patient name
         startDate: "2020-05-18T16:00:00Z",  // appointment start date
@@ -27,22 +27,23 @@ appointments:
 // resources part can be created or updated by the client user.doctors themselves
 resource:
     {
-        duuid: "string",               // doctor Id
+        duuid: "string",                 // doctor Id
         doctoName: "string",             // doctor name
-        
-        appointmentTime: [                     // list of places the doctor works in and their respective available timeslots
+        approve: 'boolean',
+        fee: 'number',
+        schedule: [                     // list of places the doctor works in and their respective available timeslots
             {
                 oganisationId:123
                 organisationName: "h&h",    // hospital or clinic name
                 location:"string"           // coordinates of the location to find by nearest location filter
-                schedule:[
+                timeslots:[
                     {
                         day: sunday
                         startTime: "7am", // 24 hrs clock
                         endTime:  "12pm",  // 24 hrs clock
                         duration: "30" // in mins
                     }
-                ],               
+                ],                  
             }
         ]
     }

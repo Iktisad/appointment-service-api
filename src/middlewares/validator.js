@@ -21,7 +21,7 @@ export const paValidationSchema= [
     check('duuid').notEmpty(),
     check('doctorName','Please choose your doctor').notEmpty(),
     
-    check('startDate','Appointment date is required').notEmpty(),                                 
+    check('bookingDate','Appointment date is required').notEmpty(),                                 
     
     check('userContact', 'Phone number is requred').notEmpty(),                                 
     check('userContact','Enter a valid phone number').isMobilePhone(),                                 
