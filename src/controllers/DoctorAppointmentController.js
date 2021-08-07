@@ -11,14 +11,38 @@ export const waiverAppointment = (req,res) => {
     
 }
 
-//Get all appointment
-export const getAppointments = (req,res) => {
-    AppointmentModel.find((err, appointment) => {
-        if(err) {
-            res.send(err);
-        }
-        res.json(appointment);
-    });
+//Get all appointment with pagination
+export const getAppointments = async (req,res, next) => {
+
+    try {
+        /*
+        *pagination based on query
+        */
+        const { page = 1, limit = 10 } = req.query;
+        const appointment = await AppointmentModel.find()
+            .limit(limit * 1)
+            .skip((page - 1) * limit);
+
+        res.status(200).json({
+            total: appointment.length,
+            message:'Displaying result',
+            result: appointment
+        });
+        
+    } catch (error) {
+        if (res.statusCode == '200') res.status(400);
+        res.json({
+            message: 'Something went wrong',
+            error: error
+        });
+    }
+
+    // AppointmentModel.find((err, appointment) => {
+    //     if(err) {
+    //         res.send(err);
+    //     }
+    //     res.json(appointment);
+    // });
 }
 
 //Get appointments specific to ID
@@ -43,7 +67,7 @@ export const patientCount = (req,res) => {
 }
 
 //List appointment from and to date range
-export const listAppointmentByDate = (req,res,next) => {
+export const listAppointmentByDate = async (req,res,next) => {
     // check if date query exists
     // check if start date is less than end date or throw invalid input exception
     try {
