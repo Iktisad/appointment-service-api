@@ -2,13 +2,61 @@ import mongoose from 'mongoose';
 import { AppointmentModel } from '../models/Appointment.js';
 
 //Approve or Cancel Appointment
-export const approveAppointment = (req,res) => {
-    
+export const approveAppointment = async (req,res,next) => {
+    try {
+        const { status } = req.body;
+        const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, {
+            status: status
+        }, {
+            runValidators: true,
+            new: true
+        });
+        
+        res.status(200).json({
+            message: 'Status has been changed',
+            result: appointment
+        });
+
+        next();
+
+    } catch (error) {
+        if (res.statusCode == '200') res.status(400);
+        res.json({
+            message: 'Something went wrong',
+            error: error
+        });
+
+        next(error);
+    }
 }
 
 //Waiver Appointment
-export const waiverAppointment = (req,res) => {
-    
+export const waiverAppointment = async (req,res,next) => {
+    try {
+        const { isWaivered } = req.body;
+        const appointment = await AppointmentModel.findByIdAndUpdate(req.params.id, {
+            isWaivered: isWaivered
+        }, {
+            runValidators: true,
+            new: true
+        });
+        
+        res.status(200).json({
+            message: 'Status has been changed',
+            result: appointment
+        });
+
+        next();
+
+    } catch (error) {
+        if (res.statusCode == '200') res.status(400);
+        res.json({
+            message: 'Something went wrong',
+            error: error
+        });
+
+        next(error);
+    }  
 }
 
 //Get all appointment with pagination
@@ -21,20 +69,26 @@ export const getAppointments = async (req,res, next) => {
         const { page = 1, limit = 10 } = req.query;
         const appointment = await AppointmentModel.find()
             .limit(limit * 1)
-            .skip((page - 1) * limit);
-
+            .skip((page - 1) * limit)                           
+            .sort({_id: 'desc'})
+            .select('startDate');                          //Sorting in descending order by objectId (desc, asc)
+        
         res.status(200).json({
             total: appointment.length,
             message:'Displaying result',
             result: appointment
         });
         
+        next();
+
     } catch (error) {
         if (res.statusCode == '200') res.status(400);
         res.json({
             message: 'Something went wrong',
             error: error
         });
+
+        next(error);
     }
 
     // AppointmentModel.find((err, appointment) => {
@@ -92,12 +146,16 @@ export const listAppointmentByDate = async (req,res,next) => {
             result: list
         });
 
+        next();
+
     } catch (error) {
         if(res.statusCode == '200') res.status(400);
         res.json({
             message:'Something went wrong',
             error: error.toString()
         });
+
+        next(error);
     } 
 }
 
