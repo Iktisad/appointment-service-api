@@ -42,8 +42,7 @@ export const reshape = (object, condition) => {
    *     "address.city.location.street": "new street"
    *  }
    **/
-  export const convertToDotNotation = (obj, newObj = {}, prefix="" ) => {
-    
+  export const convertToDotNotation = (obj, newObj = {}, prefix="" ) => {    
   
     for (let key in obj) {
       if (typeof obj[key] === "object") {

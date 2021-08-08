@@ -1,5 +1,8 @@
 import express from 'express';
-import {resourceRoute, patientAppointmentsRoute} from './routes/router-index.js';
+import {resourceRoute, 
+        patientAppointmentsRoute,
+        doctorAppointmentRoute
+    } from './routes/router-index.js';
 // import appointmentRoutes from './routes/appointments.js';
 import mongoose from 'mongoose';
 import {} from 'dotenv/config';
@@ -12,11 +15,13 @@ app.use(express.json());
 // route middleware
 app.use('/api/resources', resourceRoute);
 app.use('/api/appointments', patientAppointmentsRoute);
+app.use('/api/appointment-doctor', doctorAppointmentRoute);
+// routes(app);
 // routes
 
 // testing route
 app.get('/', (req, res)=>{
-    res.send('Yo I m active');
+    res.send('Iktisad is a b****');
     console.log('Yay');
 });
 

@@ -61,6 +61,7 @@ const geoSchema = mongoose.Schema({
 });
 
 // ===============================================================================================================================
+
 const appointmentSchema = mongoose.Schema({
     
     duuid: duuidString,               // doctor id.
@@ -87,7 +88,6 @@ const appointmentSchema = mongoose.Schema({
     userContact: reqString,
     organization: reqString,
     address: {
-
         country: reqString,
         city: reqString,
         area: reqString,
@@ -96,7 +96,7 @@ const appointmentSchema = mongoose.Schema({
     },
     description: opString,                // small description of the problem or message to the doctor
     appointmentType: reqString,         // type can be Home Consultation(telemedicine/online),In-Person,
-    fee: reqNumber,                      // payment must be done for an appointment to avoid any spamming,
+    fee: reqNumber,                     // payment must be done for an appointment to avoid any spamming,
     isWaivered: Boolean,                // doctor has the option to waiver fee.
     
 },{
