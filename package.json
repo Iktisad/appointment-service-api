@@ -14,14 +14,10 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.12.1",
-<<<<<<< HEAD
+    "moment": "^2.29.1",
     "mongoose": "^5.13.1",
     "swagger-jsdoc": "^6.1.0",
     "swagger-ui-express": "^4.1.6"
-=======
-    "moment": "^2.29.1",
-    "mongoose": "^5.13.1"
->>>>>>> 24a2e2aa90176bfe4da0fb2e027cf033d71fa1f1
   },
   "devDependencies": {
     "nodemon": "^2.0.9"
