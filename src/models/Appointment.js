@@ -22,6 +22,12 @@ const reqString = {
     minlength:3,
     maxlength:255
 };
+const opString = {
+    type: String,
+    required:true,
+    minlength:3,
+    maxlength:255
+};
 const reqStatusString = {
     type: String,
     required:true,
@@ -58,13 +64,17 @@ const geoSchema = mongoose.Schema({
 
 const appointmentSchema = mongoose.Schema({
     
-    duuid: duuidString,            // doctor id.
-    doctorName: reqString,         // doctor name
-    specialist: reqString,         // Med / Card / Neuro,
-    puuid: puuidString,            // patient Id
-    patientName: reqString,        // patient name,
-    startDate: reqDate,            // appointment start date
-    endDate: Date,                 // appointment end date
+    duuid: duuidString,               // doctor id.
+    doctorName: reqString,            // doctor name
+    specialist: reqString,            // Med / Card / Neuro,
+    puuid: puuidString,               // patient Id
+    patientName: reqString,           // patient name,
+    bookingDate: reqDate,
+    slot: reqString,                  // slot start-slot end
+    serial: Number,                   // appointment serial
+    
+    startTime: Date,                  // actual appointment start datetime or timestamp
+    endTime: Date,                    // actual appointment end datetime or timestamp
         
 
     /* 
@@ -76,6 +86,7 @@ const appointmentSchema = mongoose.Schema({
     */
     status: reqStatusString,                                 
     userContact: reqString,
+    organization: reqString,
     address: {
         country: reqString,
         city: reqString,
@@ -83,7 +94,7 @@ const appointmentSchema = mongoose.Schema({
         zipcode: reqString,
         location: geoSchema,
     },
-    description: String,                // small description of the problem or message to the doctor
+    description: opString,                // small description of the problem or message to the doctor
     appointmentType: reqString,         // type can be Home Consultation(telemedicine/online),In-Person,
     fee: reqNumber,                     // payment must be done for an appointment to avoid any spamming,
     isWaivered: Boolean,                // doctor has the option to waiver fee.

@@ -1,23 +1,63 @@
+
+import moment from 'moment';
 import { AppointmentModel } from '../models/Appointment.js'
 
+
+const APPOINTMENT_LIMIT = 2;
 // creates a patient appointment in the system
+// can be more optimised
 export const create = async (req, res, next)=>{
 
-    try {       
-        const appointment = await AppointmentModel.create(req.body);
+    try {
         
-        res.status(201).json({
-            message:'Appointment Created',
-            results: appointment
+        // before creating an appointment, run a service that checks if the current limit for appointment is reached.
+        const {duuid, puuid, bookingDate, slot} = req.body;
+        let bookingDateRange  = moment(bookingDate).add(1, 'seconds');
+
+        // find if the entry already exists
+        // auto inject serial
+        let exists = await AppointmentModel.exists({
+            puuid:puuid, 
+            slot: slot, 
+            bookingDate:{"$gte":bookingDate, "$lt": bookingDateRange }
         });
-        next();
+        console.log(exists);
+        if (exists) {
+            res.status(403);
+            throw new Error("Request Forbidden :403! Schedule Already Exists!!").toString();
+        }
+
+        bookingDateRange = bookingDate;
+        let limit = await AppointmentModel.countDocuments({
+            puuid:puuid,
+            bookingDate:{"$gte":bookingDate, "$lt": moment(bookingDateRange).add(1,'days') }
+        });
+
+        console.log(limit);
+        if (limit <= APPOINTMENT_LIMIT){
+            const appointment = await AppointmentModel.create(req.body);
+            res.status(201).json({
+                message:'Appointment Created',
+                results: appointment
+            });
+
+            next();
+
+        }else{
+
+            res.status(403)
+            throw new Error("Appointment Limit Exceeded");
+
+        }   
 
     } catch (error) {
-        res.status(400).json({
+        if(res.statusCode == 200) res.status(400);
+        
+        res.json({
             message:'Something Went Wrong',
             error: error
         });
-        console.log(req.body);
+        // console.log(req.body);
         next(error);
     }
 }
@@ -166,3 +206,10 @@ export const filterAppointmentByStatus = async(req,res,next)=> {
         next();
     }
 }
+
+// export const getAvailableTimeslots = async(req,res,next)=>{
+//     // two inputs needed for this: date, doctor id
+//     // pull the times from the resource table, and compare which ones are not
+//     const doctorAppointments = await ResourceModel.find({duuid:req.body.duuid}); 
+//     console.log(doctorAppointments);
+// }

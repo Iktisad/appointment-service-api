@@ -6,12 +6,22 @@ const duuidString = {
     minlength:9,
     maxlength:9
 };
+
 const reqString = {
     type: String,
     required:true,
     minlength:3,
     maxlength:255
 };
+
+const reqUniqueString = {
+    type: String,
+    required:true,
+    unique:true,
+    minlength:3,
+    maxlength:155
+};
+
 const reqDayString = {
     type: String,
     required:true,
@@ -28,6 +38,11 @@ const reqNumber = {
     type: Number,
     required:true
 };
+// const reqUniqueNumber = {
+//     type: Number,
+//     index:true,
+//     required:true
+// };
 
 
 const resourceSchema = mongoose.Schema({
@@ -38,15 +53,18 @@ const resourceSchema = mongoose.Schema({
         timeslots: [                               // list of places the doctor works in and their respective available timeslots
             {
                 _id: false,
-                oganisationId:reqNumber,
-                organisationName: reqString,       // hospital or clinic name
-                // location:reqString,                // coordinates of the location to find by nearest location filter
+                // oganisationId:reqUniqueNumber,
+                organisationName: reqUniqueString,      // hospital or clinic name
+                // location:reqString,                  // coordinates of the location to find by nearest location filter
+                // duration: reqNumber, or number of patients
                 schedule:[
                     {
-                        _id: false,
-                        day:reqDayString,
-                        startTime:reqString,
+                        // _id: false,
+                        dayOfTheWeek: reqDayString,
+                        startTime: reqString,
                         endTime: reqString,
+                        noOfPatient: reqNumber
+                        // interval: [reqString]
                     },
                 ]              
             }
@@ -55,4 +73,25 @@ const resourceSchema = mongoose.Schema({
     timestamps:true
 });
 
+// resourceSchema.pre('save', async function (next) {
+//     let start = moment(this.startTime, 'HH:mm a');
+//     let end = moment(this.endTime, 'HH:mm a');
+    
+//     if( end.isBefore(start) ){
+//         end.add(1, 'day');
+//       }
+    
+//     let timeStops = [];
+
+//     while (start <= end) {
+//         timeStops.push(new moment(start).format('HH:mm a'));
+//         start.add(resourceSchema.attendTime, 'minutes');
+//     }
+//     return timeStops;
+// });
+
+
 export const ResourceModel = mongoose.model('Resource',resourceSchema);
+
+
+
