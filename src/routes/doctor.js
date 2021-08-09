@@ -4,41 +4,32 @@ import { getAppointments,
          approveAppointment,
          waiverAppointment, 
          listAppointmentByDate,
-        } from '../controllers/DoctorAppointmentController.js';
-// import { validate, paValidationSchema } from '../middlewares/validator.js';
+        } from '../controllers/DoctorAppointmentController.js';   
+import { validate, appointmetnStatusCheck, dateCheck } from '../middlewares/validator.js';
+
 const router = express.Router();
 
-// send patient id parameter here to view all list of records
-router.get('/search/:id', getAppointmentWithID);
+// GET: api/appointemnt-doctor/search
+// view all the appointments specific 
 router.get('/search', getAppointments);
-router.get('/list-appointment-bydate/:id', listAppointmentByDate);
-router.put('/approve-appointment/:id', approveAppointment);
+
+// GET: api/apointment-doctor/search/id
+// view all the appointments specific to puuid instead of the mongoose object id
+router.get('/search/:id', getAppointmentWithID);
+
+// GET: api/apointment-doctor/list-appointment-bydate/id
+// view all the appointments specific to a date range
+router.get('/list-appointment-bydate/:id', dateCheck, validate, listAppointmentByDate);
+
+// PUT api/appointment-doctor/approve-appointment/id
+// update the appointment status
+router.put('/approve-appointment/:id', appointmetnStatusCheck, validate, approveAppointment);
+
+// PUT api/appointment-doctor/waiver-appointment/id
+// update the waiver status
 router.put('/waiver-appointment/:id', waiverAppointment);
+
 // router.patch();
 // router.delete();
 
 export default router;
-
-// import {  getAppointments,
-//           getAppointmentWithID,
-// } from '../controllers/DoctorAppointmentController'
-
-// const routes = (app) => {
-// app.route('/appointment')
-//    .get((req, res, next) => {
-//    //middleware
-//        console.log(`Request from: ${req.originalUrl}`)
-//        console.log(`Request type: ${req.method}`)
-//        next();
-//    }, getAppointments)
-
-//    //Post endpoint
-//    //.post(addNewAppointment);
-
-// app.route('/appointment/:appointmentID')
-//    // get a specific contact
-//    .get(getAppointmentWithID)
-
-// }
-
-// export default routes;

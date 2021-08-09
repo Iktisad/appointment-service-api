@@ -7,7 +7,6 @@ import {resourceRoute,
 import mongoose from 'mongoose';
 import {} from 'dotenv/config';
 
-
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -38,6 +37,5 @@ mongoose.connect(process.env.CONNECTION_STRING.replace('<DBPORT>', process.env.D
 () => {
     console.log("Connected to DB");
 });
-
 
 app.listen(process.env.PORT, ()=> console.log(`Running On Port http://localhost:${process.env.PORT}`));

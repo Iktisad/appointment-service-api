@@ -34,7 +34,7 @@ export const create = async (req, res, next)=>{
         });
 
         console.log(limit);
-        if (limit <= APPOINTMENT_LIMIT){
+        if (limit < APPOINTMENT_LIMIT){
             const appointment = await AppointmentModel.create(req.body);
             res.status(201).json({
                 message:'Appointment Created',

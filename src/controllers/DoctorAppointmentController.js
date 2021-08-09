@@ -9,7 +9,7 @@ export const approveAppointment = async (req,res,next) => {
             status: status
         }, {
             runValidators: true,
-            new: true
+            new: true                                        //to return the object after update 
         });
         
         res.status(200).json({
@@ -65,13 +65,14 @@ export const getAppointments = async (req,res, next) => {
     try {
         /*
         *pagination based on query
+        *select can be used to display specific data
         */
         const { page = 1, limit = 10 } = req.query;
         const appointment = await AppointmentModel.find()
             .limit(limit * 1)
-            .skip((page - 1) * limit)                           
-            .sort({_id: 'desc'})
-            .select('startDate');                          //Sorting in descending order by objectId (desc, asc)
+            .skip((page - 1) * limit)                       //(page-1) isn't required if page value starts from 0  
+            .sort({_id: 'desc'})                            //Sorting in descending order by objectId (desc, asc)
+            //.select('startDate');                          
         
         res.status(200).json({
             total: appointment.length,
@@ -88,33 +89,42 @@ export const getAppointments = async (req,res, next) => {
             error: error
         });
 
+        next(error);                                          //pass error for logging
+    }
+}
+
+//Get appointments specific to ID 
+export const getAppointmentWithID = async (req,res,next) => {
+    try {
+        let query = {puuid:req.params.id};                     
+        const appointmentList = await AppointmentModel.find(query).sort({createdAt: 'desc'});              
+        
+        res.status(200).json({
+            total: appointmentList.length,
+            message:'Displaying result',
+            result: appointmentList
+        });
+        
+        next();
+
+    } catch (error) {
+        if (res.statusCode == '200') res.status(400);
+        res.json({
+            message: 'Something went wrong',
+            error: error
+        });
+
         next(error);
     }
-
-    // AppointmentModel.find((err, appointment) => {
-    //     if(err) {
-    //         res.send(err);
-    //     }
-    //     res.json(appointment);
-    // });
 }
 
-//Get appointments specific to ID
-export const getAppointmentWithID = (req,res) => {
-    AppointmentModel.findById(req.params.id, (err, appointment) => {
-        if(err) {
-            res.send(err);
-        }
-        res.json(appointment);
-    });
-}
-
+//critical path!
 //Notify doctor of anynewly created appointment
 export const newAppointmentNotify = (req,res) => {
     
 }
 
-
+//critical path! Need payment service.
 //Provide patient count for the day
 export const patientCount = (req,res) => {
     
@@ -159,14 +169,5 @@ export const listAppointmentByDate = async (req,res,next) => {
     } 
 }
 
-//Sort appointment by date (descending or ascending)
-export const sortAppointment = (req,res) => {
-    
-}
-
-//List appointment history from most recent to least
-export const appointmentHistory = (req,res) => {
-    
-}
 
 
