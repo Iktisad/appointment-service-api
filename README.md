@@ -14,14 +14,7 @@ Install all dependencies in one command:
 npm install
 ```
 
-- **express**: For building the API server.
-- **nodemon**: For live-reloading during development.
-- **dotenv**: For environment variable management.
-- **mongoose**: For MongoDB connectivity and CRUD operations.
-- **moment**: For date and time manipulation.
-- **express-validator**: For request validation.
 - **swagger-jsdoc** & **swagger-ui-express**: For API documentation.
-- **winston** & **winston-mongodb**: For logging, with MongoDB integration.
 
 ## Setting Up the Environment
 
